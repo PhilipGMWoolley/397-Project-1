@@ -25,7 +25,7 @@ export class ScoresComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.scoresListSubs = this.scoresApi
-      .getScores()
+      .calculateScore(null)
       .subscribe(res => {
           this.scoresList = res;
         },

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ScoresApiService} from "./scores-api.service";
+import {ScoresApiService} from "../scores/scores-api.service";
 import {Input} from "./input.model"
 import {Router} from "@angular/router";
 
@@ -24,7 +24,7 @@ import {Router} from "@angular/router";
   `
 })
 export class InputComponent {
-  input = Input(void, void, void, void, void);
+  input = new Input(null, null, null, null, null);
 
   constructor(private scoresApi: ScoresApiService, private router: Router) { }
 

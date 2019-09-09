@@ -5,7 +5,7 @@ import {Score} from './scores/score.model';
 
 @Component({
   selector: 'app-root',
-  template: './app.formpage.html',
+  templateUrl: './app.formpage.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy{

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import {API_URL} from '../env';
 import {Score} from './score.model';
+import {Input} from '../inputs/input.model';
 
 @Injectable()
 export class ScoresApiService {
@@ -24,6 +25,6 @@ export class ScoresApiService {
   
   calculateScore(input: Input): Observable<any> {
 	  return this.http
-	  .post(`${API_URL}/score`, input);
+	  .get(`${API_URL}/score`);
   }
 }
