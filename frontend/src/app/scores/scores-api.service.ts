@@ -21,4 +21,9 @@ export class ScoresApiService {
       .get<Score[]>(`${API_URL}/score`)
       .catch(ScoresApiService._handleError);
   }
+  
+  calculateScore(input: Input): Observable<any> {
+	  return this.http
+	  .post(`${API_URL}/score`, input);
+  }
 }
