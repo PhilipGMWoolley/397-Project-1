@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import {ScoresApiService} from './scores/scores-api.service';
+import {TransferService} from './transfer.service'
 import {ScoresComponent} from './scores/scores.component';
 import {InputComponent} from './inputs/input.component';
 
@@ -27,7 +28,7 @@ const appRoutes: Routes = [
 		appRoutes,
 	),
   ],
-  providers: [ScoresApiService],
+  providers: [ScoresApiService, TransferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

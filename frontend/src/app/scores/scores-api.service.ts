@@ -16,15 +16,10 @@ export class ScoresApiService {
     return Observable.throw(err.message || 'Error: Unable to complete request.');
   }
 
-  // GET list of public, future events
-  getScores(): Observable<Score[]> {
-    return this.http
-      .get<Score[]>(`${API_URL}/score`)
-      .catch(ScoresApiService._handleError);
-  }
+
   
   calculateScore(input: Input): Observable<any> {
 	  return this.http
-	  .get(`${API_URL}/score`);
+	  .post(`${API_URL}/score`, input);
   }
 }

@@ -17,16 +17,17 @@ export class AppComponent implements OnInit, OnDestroy{
   }
   
   ngOnInit() {
-	  this.scoresListSubs = this.scoresApi
-	  .getScores()
+	 /** this.scoresListSubs = this.scoresApi
+	  .calculateScore("")
 	  .subscribe(res => {
 		  this.scoresList = res;
 	  },
 	  console.error
 	  );
+	  */
   }
   
   ngOnDestroy() {
-	  this.scoresListSubs.unsubscribe();
+	  //this.scoresListSubs.unsubscribe();
   }
 }

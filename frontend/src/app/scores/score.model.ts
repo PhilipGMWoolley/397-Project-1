@@ -1,7 +1,7 @@
 export class Score {
 	constructor(
-		public prognostic_variable: number,
+		public score: number,
 		public category: string,
 	
-	) {}
+	) { }
 }

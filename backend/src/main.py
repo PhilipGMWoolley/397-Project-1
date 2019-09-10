@@ -4,12 +4,37 @@ from flask_cors import CORS
 app=Flask(__name__)
 CORS(app)
 
+class Input():
+	def __init__(self, cytogenetics, bm_blast, hemoglobin, platelets, anc):
+		self.cytogenetics = cytogenetics
+		self.bm_blast = bm_blast
+		self.hemoglobin = hemoglobin
+		self.platelets = platelets
+		self.anc = anc
+
+
+
+
 @app.route('/')
 def index():
     #this is where we load the index page with the form on it
     return jsonify("hello world")
+	
+@app.route('/score', methods=['POST'])
+def receive_input():
+	input = Input('', 0, 0 ,0 ,0)
+	content=request.get_json()
+	input.cytogenetics = content["cytogenetics"]
+	temp1 = content["bm_blast"]
+	input.bm_blast = int(temp1)
+	temp2 = content["hemoglobin"]
+	input.hemoglobin = int(temp2)
+	temp3 = content["platelets"]
+	input.platelets = int(temp3)
+	temp4 = content["anc"]
+	input.anc = int(temp4)
+	return calculate_score(input.cytogenetics, input.bm_blast, input.hemoglobin, input.platelets, input.anc)
 
-@app.route('/score', methods=['GET'])
 def calculate_score(cytogenetics: str, bm_blast: int, hemoglobin: int,
          platelets: int, anc: int):
     """Calculates both the IPSS-R score and category. See ipssr_scorer for
@@ -20,7 +45,7 @@ def calculate_score(cytogenetics: str, bm_blast: int, hemoglobin: int,
     """
 
     score = ipssr_scorer(cytogenetics, bm_blast, hemoglobin, platelets, anc)
-    return jsonify(score, category(score))
+    return jsonify(Score=score, Category=category(score))
 
 
 def ipssr_scorer(cytogenetics: str, bm_blast: int, hemoglobin: int,

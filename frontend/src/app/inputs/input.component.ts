@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ScoresApiService} from "../scores/scores-api.service";
+import {TransferService} from "../transfer.service";
 import {Input} from "./input.model"
+import {Score} from "../scores/score.model"
 import {Router} from "@angular/router";
 
 @Component({
@@ -26,7 +28,8 @@ import {Router} from "@angular/router";
 export class InputComponent {
   input = new Input(null, null, null, null, null);
 
-  constructor(private scoresApi: ScoresApiService, private router: Router) { }
+  constructor(private scoresApi: ScoresApiService, private router: Router,
+  private transferService: TransferService) { }
 
   updateCytogenetics(event: any) {
     this.input.cytogenetics = event.target.value;
@@ -49,11 +52,18 @@ export class InputComponent {
   }
 
   calculateScore() {
+	let temp = new Score(0, "");
     this.scoresApi
       .calculateScore(this.input)
       .subscribe(
-        () => this.router.navigate(['/score']),
-        error => alert(error.message)
+        res => 
+		{
+		temp.score = res["Score"] as number;
+		console.log(temp.score);
+		temp.category = res["Category"];
+		this.transferService.dataMethod(temp);
+		},
       );
+	this.router.navigate(['/', 'score']);
   }
 }

@@ -1,39 +1,49 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {Score} from './score.model';
+import {Router} from '@angular/router';
 import {ScoresApiService} from './scores-api.service';
+import {TransferService} from '../transfer.service';
 
 @Component({
   selector: 'score',
   template: `
     <div>
       <button routerLink="/">Back</button>
-      <ul>
-        <li *ngFor="let score of scoresList">
-
+      <ul *ngIf="scoresList">
+        <li>
+		{{scoresList.score}}, {{scoresList.category}}
         </li>
       </ul>
     </div>
   `
 })
 export class ScoresComponent implements OnInit, OnDestroy {
-  scoresListSubs: Subscription;
-  scoresList: Score[];
+  subscription: Subscription;
+  scoresList: Score;
 
-  constructor(private scoresApi: ScoresApiService) {
+  constructor(private scoresApi: ScoresApiService, private transferService: TransferService, private router: Router) {
+	  this.subscription = this.transferService.getData()
+	  .subscribe(data => this.scoresList = data as Score);
+	  
+        
   }
 
   ngOnInit() {
-    this.scoresListSubs = this.scoresApi
-      .calculateScore(null)
-      .subscribe(res => {
-          this.scoresList = res;
-        },
-        console.error
-      );
+	  console.log(typeof(this.scoresList));
+	  console.log(this.scoresList);
+	  /**
+	  let temp = this.transferService.getData();
+	  let score = new Score(temp[0], temp[1]);
+	  this.scoresList[0] = score;
+	  
+	  this.transferService.dataMethod$.subscribe(
+		data => this.scoresList = data,
+		);
+		*/
   }
 
   ngOnDestroy() {
-    this.scoresListSubs.unsubscribe();
+	  this.subscription.unsubscribe();
   }
 }
